@@ -11,8 +11,25 @@ import { useState } from 'react'
 // Bonus points: Try making it so the look of the badge changes somehow
 // when you hover over it, perhaps an x for if you're about to dismiss it?
 
-const Badge = () => {
-  return <span>Hello, world!</span>
+const Badge = ({ children, color, dismissable }) => {
+  const [show, setShow] = useState(true)
+
+  const handleDismiss = () => {
+    setShow(false)
+  }
+
+  return (
+    <>
+      {show && (
+        <span
+          className={`badge ${color} ${dismissable ? 'dismissable' : ''}`}
+          onClick={dismissable && handleDismiss}
+        >
+          {children}
+        </span>
+      )}
+    </>
+  )
 }
 
 export default function BadgeList() {
@@ -44,6 +61,10 @@ export default function BadgeList() {
           letter-spacing: 1px;
           text-transform: uppercase;
           cursor: pointer;
+        }
+
+        .dismissable:hover {
+          filter: brightness(90%);
         }
 
         .red {
